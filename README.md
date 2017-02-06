@@ -8,7 +8,7 @@
 
 In the previous units, we have been building using a createStore method that we wrote, and passing a reducer to it.  We have been using the dispatch method from the store, to dispatch actions and update the state.
 
-Now let's think about which part of our application would belong in the official redux library -- that is, which part of our codebase would be common to all applications.  Well, our reducers seem unique to each react-redux application.  This is because sometimes we have reducers that would add or remove items, or add or remove users, or edit users, etc.  What these actions are and how the reducer manages the state is customized.  Thus, the reducer would not be part of the redux library that other developers would use to build their application.   
+Now let's think about which part of our application would belong in the official redux library -- that is, which part of our codebase would be common to all applications.  Well, probably not the reducer as our reducers seem unique to each react-redux application.  The reducers are unique because sometimes we have reducers that would add or remove items, or add or remove users, or edit users, etc.  What these actions are and how the reducer manages the state is customized.  Thus, the reducer would not be part of the redux library that other developers would use to build their application.   
 
 The createStore, method however is generic across redux applications.  It always return a store (given a reducer) that will have a dispatch method and a getState method.  
 
@@ -116,9 +116,7 @@ Second, we need to tell our application to communicate with this extension.  Doi
   const store = createStore(shoppingListItemReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
   ReactDOM.render(
-    <Provider store={store}>
       <App store={store}/>
-     </Provider>
     ,
     document.getElementById('root')
   );
