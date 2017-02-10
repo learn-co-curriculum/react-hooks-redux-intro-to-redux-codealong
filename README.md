@@ -28,7 +28,6 @@ Redux provides a function, `createStore()`, that, when invoked, returns an insta
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux'; /* code change */
-import { Provider } from 'react-redux'; /* code change */
 import shoppingListItemReducer from 'src/reducers/shoppingListItemReducer.js';
 import App from './App';
 import './index.css';
@@ -36,9 +35,7 @@ import './index.css';
 const store = createStore(shoppingListItemReducer); /* code change */
 
 ReactDOM.render(
-  <Provider store={store}> 
-    <App store={store} />
-  </Provider>, /* code change */ 
+  <App store={store} />, /* code change */ 
   document.getElementById('root')
 );
 ```
