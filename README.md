@@ -159,6 +159,6 @@ Ok, notice that we are still passing through our reducer to the createStore meth
 
 Whew!
 
-###Summary
+### Summary
 
 In this lesson, we saw how to use the __createStore()__ method. We saw that we can rely on the Redux library to provide this method, and that we still need to write our own reducer to tell the store what the new state will be given a particular action. We saw that when using the __createStore()__ method, and passing through a reducer, we are able to change the state just as we did previously. We were able to see these changes by hooking our application up to a Chrome extension called Redux Devtools, and then providing the correct configuration.
