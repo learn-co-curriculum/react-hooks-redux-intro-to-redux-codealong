@@ -127,7 +127,7 @@ Now, refresh your app, and give it a shot. You should see the correct action bei
 
 #### Incorporating Redux DevTools
 
-There is this amazing piece of software that allows us to nicely view the state of our store and each action that is dispatched. The software does a lot more than that. I'll let you read about it here: (redux-devtools-extension)[https://github.com/zalmoxisus/redux-devtools-extension]. Ok, so let's get to incorporating this. In fact, every time we use the Redux library going forward, we should make sure we incorporate devtools. Otherwise, you are flying blind.
+There is this amazing piece of software that allows us to nicely view the state of our store and each action that is dispatched. The software does a lot more than that. I'll let you read about it here: [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension). Ok, so let's get to incorporating this. In fact, every time we use the Redux library going forward, we should make sure we incorporate devtools. Otherwise, you are flying blind.
 
 First, just Google for Redux Devtools Chrome. There you will find the Chrome extension for Redux.  Please download it, and refresh Chrome. You will know that you have installed the extension if you go to your developer console in Google Chrome (press command+shift+c to pull it up), and then at the top bar you will see a couple of arrows. Click those arrows, and if you see Redux as your dropdown, you properly installed the Chrome extension. Step one is done.
 
@@ -162,3 +162,5 @@ Whew!
 ### Summary
 
 In this lesson, we saw how to use the __createStore()__ method. We saw that we can rely on the Redux library to provide this method, and that we still need to write our own reducer to tell the store what the new state will be given a particular action. We saw that when using the __createStore()__ method, and passing through a reducer, we are able to change the state just as we did previously. We were able to see these changes by hooking our application up to a Chrome extension called Redux Devtools, and then providing the correct configuration.
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/intro-to-redux-library-codealong'>Intro To Redux Library Codealong</a> on Learn.co and start learning to code for free.</p>
