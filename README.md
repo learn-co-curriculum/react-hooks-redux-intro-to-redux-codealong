@@ -55,13 +55,47 @@ import './index.css';
 
 const store = createStore(shoppingListItemReducer); /* code change */
 
+...
 ReactDOM.render(
-  <App store={store} />, /* code change */
+  <App />,
   document.getElementById('root')
 );
 ```
 
-Notice that we are importing the `createStore` function from Redux. Just like we
+Notice that we are importing the `createStore` function from Redux. Now, with
+the above set up, we _could_ pass `store` down through App and we would be able
+to access the __Redux__ store.
+
+However, reducing the need for passing props is part of why __Redux__ works well
+with React. To avoid passing `store` as a prop, we use the `Provider` component,
+which is imported from `react-redux`. The `Provider` component wraps the top
+level component, App, in this case, and is the only component where `store` is
+passed in:
+
+```javascript
+// ./src/index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux'; /* code change */
+import shoppingListItemReducer from './reducers/shoppingListItemReducer.js';
+import App from './App';
+import './index.css';
+
+const store = createStore(shoppingListItemReducer);
+
+...
+ReactDOM.render(
+  <Provider store={store}> /* code change */
+    <App />
+  </ Provider>, /* code change */
+  document.getElementById('root')
+);
+```
+
+By including th
+Just like we
 did previously, we call our __createStore()__ method in `src/index.js`.  We pass
 our __createStore()__ method a reducer, and then we pass our newly created store
 to our __App__ component as a prop. You can find the reducer in
