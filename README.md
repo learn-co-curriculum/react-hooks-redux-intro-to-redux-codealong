@@ -85,21 +85,22 @@ import './index.css';
 
 const store = createStore(shoppingListItemReducer);
 
-...
 ReactDOM.render(
   <Provider store={store}> /* code change */
     <App />
-  </ Provider>, /* code change */
+  </Provider>, /* code change */
   document.getElementById('root')
 );
 ```
 
-By including th
-Just like we
-did previously, we call our __createStore()__ method in `src/index.js`.  We pass
-our __createStore()__ method a reducer, and then we pass our newly created store
-to our __App__ component as a prop. You can find the reducer in
-`./src/reducers/shoppingListItemReducer.js`:
+By including the `Provider`, we'll be able to access our __Redux__ store and/or
+dispatch actions from any component we want, regardless of where it is on the
+component tree.
+
+So, to recap, just like we did previously, we call our __createStore()__ method
+in `src/index.js`.  We pass our __createStore()__ method a reducer, and then we
+pass our newly created store to our __App__ component as a prop. You can find
+the reducer in `./src/reducers/shoppingListItemReducer.js`:
 
 ```javascript
 // ./src/reducers/shoppingListItemReducer.js
@@ -128,23 +129,26 @@ out the reducer function, giving it a relevant name, `shoppingListItemReducer`,
 and let the Redux library take care of our  `createStore` function. These two
 pieces are both imported in to `src/index.js` and used to create `store`.
 
-This `store` value is then passed in as a prop to `App`.
+This `store` value is then passed in as a prop to `Provider`.
 
-We can try to see changes in our state if we add the following code. (It won't
-work, but let's give it a shot - A for effort I always say.)
+To gain access to the `store` somewhere in our app, we use a second function
+provided by `react-redux`, `connect`. By modifying a component's export
+statement and included `connect`, we are able to take data from our __Redux__
+store and map them to a component's props. Similarly, we can _also_ take
+actions, and by wrapping them in a dispatch and an anonymous function, be able
+pass them as props as well:
 
 ```javascript
 // ./src/App.js
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import './App.css';
 
 class App extends Component {
 
   handleOnClick = (event) => {
-    this.props.store.dispatch({
-      type: 'INCREASE_COUNT',
-    });
+    this.props.increaseCount()
   }
 
   render() {
@@ -153,29 +157,48 @@ class App extends Component {
         <button onClick={this.handleOnClick} >
           Click
         </button>
-        <p>{this.props.store.getState().items.length}</p>
+        <p>{this.props.items.length}</p>
       </div>
     );
   }
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    items: state.items
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increaseCount: () => dispatch({type: 'INCREASE_COUNT'})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 ```
 
-Ok, so this code places a button on the page, that dispatches an action to
-increase the count each time the button is clicked. If you boot up the app, you
-should see a button on the page, followed by a zero, as we start off with zero
-items in our store's state. If you click the button, however it never changes.
-Why not? Well, we *are* changing our state, but our application is not
-re-rendering. But don't take my word for it, instead let's prove it in the next
-section.
+Ok, so this code places a button on the page with an `onClick` event listener
+pointed to `this.handleOnClick`. When `this.handleOnClick` is invoked, it calls
+a function, `this.props.increaseCount`. Well.. `increaseCount` is actually being
+provided by the new function below our App component: `mapDispatchToProps`.
+
+Meanwhile, we've also got `this.props.items.length`, which is _also_ a prop
+created from our __Redux__ store. As the store's `items` property increases, App
+will display a different number!
+
+If you boot up the app, you should see a button on the page, followed by a zero,
+using the core above for `index.js` and `App.js`, we can see __Redux__ in
+action. Every button click dispatches an action to our store, causing it to
+change. Since data (`items`) from that store is being accessed in App, App will
+re-render and display the updated counter.
 
 #### Add Logging to Our Reducer
 
 Ok, so getting our application to re-render takes a bit of work, and were going
-to leave it for the next section. In the meantime, let's get some feedback.
-First, let's log our action and the new state. So we'll change the reducer to
-the following:
+to go into greater depth in the next sections. In the meantime, let's get some
+feedback. First, let's log our action and the new state. So we'll change the
+reducer to the following:
 
 ```javascript
 // ./src/reducers/shoppingListItemReducer
