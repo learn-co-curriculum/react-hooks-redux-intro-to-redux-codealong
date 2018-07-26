@@ -24,9 +24,11 @@ always return a store (given a reducer) that will have a dispatch method and a
 getState method.
 
 So from now on, we will import our __createStore()__ method from the official
-Redux library.  Normally, to install Redux into a React application, you simply
-need to run `npm install redux --save`. Clone down this repo and then run
-`npm install && npm start` to get started.
+Redux library.  Normally, to install Redux into a React application, you need to
+install two packages, `redux` and `react-redux` by running `npm install redux &&
+npm install react-redux`. These are already included in this lesson's
+`package.json` file, so all you need to do is run `npm install && npm start` to
+get started.
 
 In this code along, we'll be building a simple shopping list application that
 will allow a user to view an existing shopping list.
