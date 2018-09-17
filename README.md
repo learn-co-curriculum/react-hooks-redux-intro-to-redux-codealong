@@ -2,31 +2,30 @@
 
 ## Objectives
 
-* Use the `createStore()` method provided by the redux library.
+- Use the `createStore()` method provided by the redux library.
 
 ## Introduction
 
-In the previous section, we have been building using a __createStore()__ method
-that we wrote, and passing a reducer to it. We have been using the __dispatch__
+In the previous section, we have been building using a **createStore()** method
+that we wrote, and passing a reducer to it. We have been using the **dispatch**
 method from the store, to dispatch actions and update the state.
 
 Now let's think about which part of our application would belong in the official
 Redux library -- that is, which part of our codebase would be common to all
 applications. Well, probably not the reducer as our reducers seem unique to each
-React & Redux application.  The reducers are unique because sometimes we have
+React & Redux application. The reducers are unique because sometimes we have
 reducers that would add or remove items, or add or remove users, or edit users,
 etc. What these actions are and how the reducer manages the state is customized.
 Thus, the reducer would not be part of the redux library that other developers
-would use to build their application.   
+would use to build their application.
 
-The __createStore()__, method however is generic across Redux applications. It
+The **createStore()**, method however is generic across Redux applications. It
 always return a store (given a reducer) that will have a dispatch method and a
 getState method.
 
-So from now on, we will import our __createStore()__ method from the official
-Redux library.  Normally, to install Redux into a React application, you need to
-install two packages, `redux` and `react-redux` by running `npm install redux &&
-npm install react-redux`. These are already included in this lesson's
+So from now on, we will import our **createStore()** method from the official
+Redux library. Normally, to install Redux into a React application, you need to
+install two packages, `redux` and `react-redux` by running `npm install redux && npm install react-redux`. These are already included in this lesson's
 `package.json` file, so all you need to do is run `npm install && npm start` to
 get started.
 
@@ -55,18 +54,14 @@ import './index.css';
 
 const store = createStore(shoppingListItemReducer); /* code change */
 
-...
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 Notice that we are importing the `createStore` function from Redux. Now, with
 the above set up, we _could_ pass `store` down through App and we would be able
-to access the __Redux__ store.
+to access the **Redux** store.
 
-However, reducing the need for passing props is part of why __Redux__ works well
+However, reducing the need for passing props is part of why **Redux** works well
 with React. To avoid passing `store` as a prop, we use the `Provider` component,
 which is imported from `react-redux`. The `Provider` component wraps the top
 level component, App, in this case, and is the only component where `store` is
@@ -86,36 +81,40 @@ import './index.css';
 const store = createStore(shoppingListItemReducer);
 
 ReactDOM.render(
-  <Provider store={store}> /* code change */
-    <App />
-  </Provider>, /* code change */
-  document.getElementById('root')
+	<Provider store={store}>
+		{' '}
+		/* code change */
+		<App />
+	</Provider> /* code change */,
+	document.getElementById('root')
 );
 ```
 
-By including the `Provider`, we'll be able to access our __Redux__ store and/or
+By including the `Provider`, we'll be able to access our **Redux** store and/or
 dispatch actions from any component we want, regardless of where it is on the
 component tree.
 
-So, to recap, just like we did previously, we call our __createStore()__ method
-in `src/index.js`.  We pass our __createStore()__ method a reducer, and then we
-pass our newly created store to our __App__ component as a prop. You can find
+So, to recap, just like we did previously, we call our **createStore()** method
+in `src/index.js`. We pass our **createStore()** method a reducer, and then we
+pass our newly created store to our **App** component as a prop. You can find
 the reducer in `./src/reducers/shoppingListItemReducer.js`:
 
 ```javascript
 // ./src/reducers/shoppingListItemReducer.js
 
-export default function shoppingListItemReducer(state = {
-  items: []
-}, action) {
-  switch(action.type) {
+export default function shoppingListItemReducer(
+	state = {
+		items: []
+	},
+	action
+) {
+	switch (action.type) {
+		case 'INCREASE_COUNT':
+			return state.items.concat(state.items.length + 1);
 
-    case 'INCREASE_COUNT':
-      return state.items.concat(state.items.length + 1);
-
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }
 ```
 
@@ -126,14 +125,14 @@ item.
 Instead of having all of our functions encapsulated in a closure within
 `index.js` as we did while building our own redux set up, we've now separated
 out the reducer function, giving it a relevant name, `shoppingListItemReducer`,
-and let the Redux library take care of our  `createStore` function. These two
+and let the Redux library take care of our `createStore` function. These two
 pieces are both imported in to `src/index.js` and used to create `store`.
 
 This `store` value is then passed in as a prop to `Provider`.
 
 To gain access to the `store` somewhere in our app, we use a second function
 provided by `react-redux`, `connect`. By modifying a component's export
-statement and included `connect`, we are able to take data from our __Redux__
+statement and included `connect`, we are able to take data from our **Redux**
 store and map them to a component's props. Similarly, we can _also_ take
 actions, and by wrapping them in a dispatch and an anonymous function, be able
 pass them as props as well:
@@ -142,40 +141,40 @@ pass them as props as well:
 // ./src/App.js
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import './App.css';
 
 class App extends Component {
+	handleOnClick = event => {
+		this.props.increaseCount();
+	};
 
-  handleOnClick = (event) => {
-    this.props.increaseCount()
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <button onClick={this.handleOnClick} >
-          Click
-        </button>
-        <p>{this.props.items.length}</p>
-      </div>
-    );
-  }
-};
+	render() {
+		return (
+			<div className="App">
+				<button onClick={this.handleOnClick}>Click</button>
+				<p>{this.props.items.length}</p>
+			</div>
+		);
+	}
+}
 
 const mapStateToProps = state => {
-  return {
-    items: state.items
-  }
-}
+	return {
+		items: state.items
+	};
+};
 
 const mapDispatchToProps = dispatch => {
-  return {
-    increaseCount: () => dispatch({type: 'INCREASE_COUNT'})
-  }
-}
+	return {
+		increaseCount: () => dispatch({ type: 'INCREASE_COUNT' })
+	};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);
 ```
 
 Ok, so this code places a button on the page with an `onClick` event listener
@@ -184,11 +183,11 @@ a function, `this.props.increaseCount`. Well.. `increaseCount` is actually being
 provided by the new function below our App component: `mapDispatchToProps`.
 
 Meanwhile, we've also got `this.props.items.length`, which is _also_ a prop
-created from our __Redux__ store. As the store's `items` property increases, App
+created from our **Redux** store. As the store's `items` property increases, App
 will display a different number!
 
 If you boot up the app, you should see a button on the page, followed by a zero,
-using the core above for `index.js` and `App.js`, we can see __Redux__ in
+using the core above for `index.js` and `App.js`, we can see **Redux** in
 action. Every button click dispatches an action to our store, causing it to
 change. Since data (`items`) from that store is being accessed in App, App will
 re-render and display the updated counter.
@@ -203,29 +202,33 @@ reducer to the following:
 ```javascript
 // ./src/reducers/shoppingListItemReducer
 
-export default function shoppingListItemReducer(state = {
-  items: []
-}, action) {
-  console.log(action);
-  switch(action.type) {
+export default function shoppingListItemReducer(
+	state = {
+		items: []
+	},
+	action
+) {
+	console.log(action);
+	switch (action.type) {
+		case 'INCREASE_COUNT':
+			console.log('Current state.items length %s', state.items.length);
+			console.log('Updating state.items length to %s', state.items.length + 1);
+			return Object.assign({}, state, {
+				items: state.items.concat(state.items.length + 1)
+			});
 
-    case 'INCREASE_COUNT':
-      console.log("Current state.items length %s", state.items.length);
-      console.log("Updating state.items length to %s", state.items.length + 1);
-      return Object.assign({}, state, { items: state.items.concat(state.items.length + 1) });
-
-    default:
-      console.log("Initial state.items length: %s", state.items.length);
-      return state;
-  }
+		default:
+			console.log('Initial state.items length: %s', state.items.length);
+			return state;
+	}
 }
 ```
 
 Ok, so this may look like a lot, but really all were doing is adding some
-logging behavior.  At the top of the function, we are logging the action. After
+logging behavior. At the top of the function, we are logging the action. After
 the case statement, we are storing our state as current state first. Then we are
-logging the updating state value.  Then under the default case statement, we
-just can log the previous state because this state is unchanged.  
+logging the updating state value. Then under the default case statement, we
+just can log the previous state because this state is unchanged.
 
 Now, refresh your app, and give it a shot. You should see the correct action
 being dispatched, as well as an update to the state. While we aren't getting our
@@ -244,14 +247,14 @@ fact, every time we use the Redux library going forward, we should make sure we
 incorporate devtools. Otherwise, you are flying blind.
 
 First, just Google for Redux Devtools Chrome. There you will find the Chrome
-extension for Redux.  Please download it, and refresh Chrome. You will know that
+extension for Redux. Please download it, and refresh Chrome. You will know that
 you have installed the extension if you go to your developer console in Google
 Chrome (press command+shift+c to pull it up), and then at the top bar you will
 see a couple of arrows. Click those arrows, and if you see Redux as your
 dropdown, you properly installed the Chrome extension. Step one is done.
 
 Second, we need to tell our application to communicate with this extension.
-Doing so is pretty easy.  Now we change the arguments to our createStore method
+Doing so is pretty easy. Now we change the arguments to our createStore method
 to the following:
 
 ```javascript
@@ -264,13 +267,12 @@ import shoppingListItemReducer from './reducers/shoppingListItemReducer';
 import App from './App';
 import './index.css';
 
-const store = createStore(shoppingListItemReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); /* code change */
+const store = createStore(
+	shoppingListItemReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+); /* code change */
 
-ReactDOM.render(
-  <App store={store} />,
-  document.getElementById('root')
-);
-
+ReactDOM.render(<App store={store} />, document.getElementById('root'));
 ```
 
 Ok, notice that we are still passing through our reducer to the createStore
@@ -280,8 +282,8 @@ Now if you have your Chrome console opened, make sure the Redux Devtools
 Inspector is open (press command+shift+c, click on the arrows at the top right,
 and the dropdown for the extension). Now click on the tab that says state. You
 should see `{ items: [] }`. If you do, it means that your app is now
-communicating with the devtool.  Click on the button in your application, to see
-if the state changes.  Now for each time you click on it, you should see an
+communicating with the devtool. Click on the button in your application, to see
+if the state changes. Now for each time you click on it, you should see an
 action in the devtools that has the name of that action. If you are looking at
 the last state, you should see the changes in our state.
 
@@ -289,10 +291,10 @@ Whew!
 
 ### Summary
 
-In this lesson, we saw how to use the __createStore()__ method. We saw that we
+In this lesson, we saw how to use the **createStore()** method. We saw that we
 can rely on the Redux library to provide this method, and that we still need to
 write our own reducer to tell the store what the new state will be given a
-particular action. We saw that when using the __createStore()__ method, and
+particular action. We saw that when using the **createStore()** method, and
 passing through a reducer, we are able to change the state just as we did
 previously. We were able to see these changes by hooking our application up to a
 Chrome extension called Redux Devtools, and then providing the correct
