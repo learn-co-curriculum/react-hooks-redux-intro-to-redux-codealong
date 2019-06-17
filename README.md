@@ -20,7 +20,7 @@ Thus, the reducer would not be part of the redux library that other developers
 would use to build their application.
 
 The **createStore()**, method however is generic across Redux applications. It
-always return a store (given a reducer) that will have a dispatch method and a
+always returns a store (given a reducer) that will have a dispatch method and a
 getState method.
 
 So from now on, we will import our **createStore()** method from the official
