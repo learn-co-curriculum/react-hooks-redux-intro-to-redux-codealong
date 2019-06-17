@@ -81,11 +81,11 @@ import './index.css';
 const store = createStore(shoppingListItemReducer);
 
 ReactDOM.render(
-	<Provider store={store}>
-		/* code change */
-		<App />
-	</Provider> /* code change */,
-	document.getElementById('root')
+  <Provider store={store}>
+    /* code change */
+    <App />
+  </Provider> /* code change */,
+  document.getElementById('root')
 );
 ```
 
@@ -102,18 +102,18 @@ the reducer in `./src/reducers/shoppingListItemReducer.js`:
 // ./src/reducers/shoppingListItemReducer.js
 
 export default function shoppingListItemReducer(
-	state = {
-		items: []
-	},
-	action
+  state = {
+    items: []
+  },
+  action
 ) {
-	switch (action.type) {
-		case 'INCREASE_COUNT':
-			return state.items.concat(state.items.length + 1);
+  switch (action.type) {
+    case 'INCREASE_COUNT':
+      return state.items.concat(state.items.length + 1);
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 }
 ```
 
@@ -144,35 +144,35 @@ import { connect } from 'react-redux';
 import './App.css';
 
 class App extends Component {
-	handleOnClick = event => {
-		this.props.increaseCount();
-	};
+  handleOnClick = event => {
+    this.props.increaseCount();
+  };
 
-	render() {
-		return (
-			<div className="App">
-				<button onClick={this.handleOnClick}>Click</button>
-				<p>{this.props.items.length}</p>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div className="App">
+        <button onClick={this.handleOnClick}>Click</button>
+        <p>{this.props.items.length}</p>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-	return {
-		items: state.items
-	};
+  return {
+    items: state.items
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-	return {
-		increaseCount: () => dispatch({ type: 'INCREASE_COUNT' })
-	};
+  return {
+    increaseCount: () => dispatch({ type: 'INCREASE_COUNT' })
+  };
 };
 
 export default connect(
-	mapStateToProps,
-	mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(App);
 ```
 
@@ -202,24 +202,24 @@ reducer to the following:
 // ./src/reducers/shoppingListItemReducer
 
 export default function shoppingListItemReducer(
-	state = {
-		items: []
-	},
-	action
+  state = {
+    items: []
+  },
+  action
 ) {
-	console.log(action);
-	switch (action.type) {
-		case 'INCREASE_COUNT':
-			console.log('Current state.items length %s', state.items.length);
-			console.log('Updating state.items length to %s', state.items.length + 1);
-			return Object.assign({}, state, {
-				items: state.items.concat(state.items.length + 1)
-			});
+  console.log(action);
+  switch (action.type) {
+    case 'INCREASE_COUNT':
+      console.log('Current state.items length %s', state.items.length);
+      console.log('Updating state.items length to %s', state.items.length + 1);
+      return Object.assign({}, state, {
+        items: state.items.concat(state.items.length + 1)
+      });
 
-		default:
-			console.log('Initial state.items length: %s', state.items.length);
-			return state;
-	}
+    default:
+      console.log('Initial state.items length: %s', state.items.length);
+      return state;
+  }
 }
 ```
 
@@ -267,8 +267,8 @@ import App from './App';
 import './index.css';
 
 const store = createStore(
-	shoppingListItemReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  shoppingListItemReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ); /* code change */
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'));
@@ -299,6 +299,6 @@ previously. We were able to see these changes by hooking our application up to a
 Chrome extension called Redux Devtools, and then providing the correct
 configuration.
 
-<p class='util--hide'>View <a href='https://learn.co/lessons/intro-to-redux-library-codealong'>Intro To Redux Library Codealong</a> on Learn.co and start learning to code for free.</p>
-
 [devtools]: https://github.com/zalmoxisus/redux-devtools-extension
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/intro-to-redux-library-codealong'>Intro To Redux Library Codealong</a> on Learn.co and start learning to code for free.</p>
