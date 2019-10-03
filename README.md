@@ -80,9 +80,9 @@ import './index.css';
 
 const store = createStore(shoppingListItemReducer);
 
+// code change - added Provider to wrap around App
 ReactDOM.render(
   <Provider store={store}>
-    /* code change */
     <App />
   </Provider> /* code change */,
   document.getElementById('root')
@@ -109,7 +109,10 @@ export default function shoppingListItemReducer(
 ) {
   switch (action.type) {
     case 'INCREASE_COUNT':
-      return state.items.concat(state.items.length + 1);
+      return return {
+        ...state,
+        items: state.items.concat(state.items.length + 1)
+      }
 
     default:
       return state;
@@ -125,7 +128,7 @@ Instead of having all of our functions encapsulated in a closure within
 `index.js` as we did while building our own redux set up, we've now separated
 out the reducer function, giving it a relevant name, `shoppingListItemReducer`,
 and let the Redux library take care of our `createStore` function. These two
-pieces are both imported in to `src/index.js` and used to create `store`.
+pieces are both imported into `src/index.js` and used to create `store`.
 
 This `store` value is then passed in as a prop to `Provider`.
 
@@ -212,7 +215,8 @@ export default function shoppingListItemReducer(
     case 'INCREASE_COUNT':
       console.log('Current state.items length %s', state.items.length);
       console.log('Updating state.items length to %s', state.items.length + 1);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         items: state.items.concat(state.items.length + 1)
       });
 
