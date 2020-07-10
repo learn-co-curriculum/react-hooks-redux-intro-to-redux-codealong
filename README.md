@@ -310,5 +310,3 @@ Chrome extension called Redux Devtools, and then providing the correct
 configuration.
 
 [devtools]: https://github.com/zalmoxisus/redux-devtools-extension
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/intro-to-redux-library-codealong'>Intro To Redux Library Codealong</a> on Learn.co and start learning to code for free.</p>
