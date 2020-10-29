@@ -310,4 +310,3 @@ Chrome extension called Redux Devtools, and then providing the correct
 configuration.
 
 [devtools]: https://github.com/zalmoxisus/redux-devtools-extension
-
