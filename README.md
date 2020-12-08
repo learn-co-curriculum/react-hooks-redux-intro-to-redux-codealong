@@ -217,7 +217,7 @@ const initialState = {
   items: [],
 };
 
-export function shoppingListReducer(state = initialState, action) {
+function counterReducer(state = initialState, action) {
   switch (action.type) {
     case "count/increment":
       console.log("Current state.items length %s", state.items.length);
@@ -227,10 +227,12 @@ export function shoppingListReducer(state = initialState, action) {
         items: state.items.concat(state.items.length + 1),
       };
     default:
-      console.log("Initial state.items length: %s", state.items.length);
+      console.log("Initial state.items length %s", state.items.length);
       return state;
   }
 }
+
+export default counterReducer;
 ```
 
 Ok, so this may look like a lot, but really all were doing is adding some
@@ -270,13 +272,13 @@ to the following:
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
-import { Provider } from "react-redux";
-import { shoppingListReducer } from "./features/ShoppingList/shoppingListSlice.js";
+import { Provider } from "react-redux"; /* code change */
+import counterReducer from "./features/counter/counterSlice.js";
 import App from "./App";
 import "./index.css";
 
 const store = createStore(
-  shoppingListReducer,
+  counterReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ); /* code change */
 
