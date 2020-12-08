@@ -1,35 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import './App.css';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-class App extends Component {
-	handleOnClick = event => {
-		this.props.increaseCount();
-	};
+function App() {
+  // read from the Redux store
+  const items = useSelector((state) => state.items);
 
-	render() {
-		return (
-			<div className="App">
-				<button onClick={this.handleOnClick}>Click</button>
-				<p>{this.props.items.length}</p>
-			</div>
-		);
-	}
+  // gives us the dispatch function to send actions to the Redux store
+  const dispatch = useDispatch();
+
+  function handleOnClick() {
+    // dispatching an action on click
+    dispatch({ type: "count/increment" });
+  }
+
+  return (
+    <div className="App">
+      <button onClick={handleOnClick}>Click</button>
+      <p>{items.length}</p>
+    </div>
+  );
 }
 
-const mapStateToProps = state => {
-	return {
-		items: state.items
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		increaseCount: () => dispatch({ type: 'INCREASE_COUNT' })
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(App);
+export default App;
