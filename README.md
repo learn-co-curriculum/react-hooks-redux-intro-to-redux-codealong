@@ -3,6 +3,8 @@
 ## Objectives
 
 - Use the `createStore()` function provided by the Redux library.
+- Use the `useSelector()` and `useDispatch()` hooks provided by React-Redux to
+  access and update the store.
 
 ## Introduction
 
@@ -48,13 +50,13 @@ renders our application.
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux"; /* code change */
-import { shoppingListReducer } from "./features/ShoppingList/shoppingListSlice.js";
+import counterReducer from "./features/counter/counterSlice.js";
 import App from "./App";
 import "./index.css";
 
-const store = createStore(shoppingListReducer); /* code change */
-
 ReactDOM.render(<App />, document.getElementById("root"));
+
+const store = createStore(counterReducer); /* code change */
 ```
 
 Notice that we are importing the `createStore` function from Redux. Now, with
@@ -73,11 +75,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux"; /* code change */
-import { shoppingListReducer } from "./features/ShoppingList/shoppingListSlice.js";
+import counterReducer from "./features/counter/counterSlice.js";
 import App from "./App";
 import "./index.css";
-
-const store = createStore(shoppingListReducer);
 
 // code change - added Provider to wrap around App
 ReactDOM.render(
@@ -95,16 +95,16 @@ component tree.
 So, to recap, just like we did previously, we call our **createStore()** function
 in `src/index.js`. We pass our **createStore()** method a reducer, and then we
 pass our newly created store to our **App** component as a prop. You can find
-the reducer in `./src/features/ShoppingList/shoppingListSlice.js`:
+the reducer in `./src/features/counter/counterSlice.js`:
 
 ```javascript
-// ./src/features/ShoppingList/shoppingListSlice.js
+// ./src/features/counter/counterSlice.js
 
 const initialState = {
   items: [],
 };
 
-export function shoppingListReducer(state = initialState, action) {
+function counterReducer(state = initialState, action) {
   switch (action.type) {
     case "count/increment":
       return {
@@ -115,6 +115,8 @@ export function shoppingListReducer(state = initialState, action) {
       return state;
   }
 }
+
+export default counterReducer;
 ```
 
 Ok so effectively, our reducer is just producing a counter. It adds a new item
@@ -123,11 +125,13 @@ item.
 
 Instead of having all of our functions encapsulated in a closure within
 `index.js` as we did while building our own redux set up, we've now separated
-out the reducer function, giving it a relevant name, `shoppingListReducer`,
+out the reducer function, giving it a relevant name, `counterReducer`,
 and let the Redux library take care of our `createStore` function. These two
 pieces are both imported into `src/index.js` and used to create `store`.
 
 This `store` value is then passed in as a prop to `Provider`.
+
+### Interacting with the Store: useDispatch and useSelector
 
 To gain access to the `store` somewhere in our app, we use two **hooks**
 provided by `react-redux`: the `useDispatch` hook (for dispatching actions to
@@ -135,12 +139,12 @@ the store), and the `useSelector` hook (for _selecting_ parts of state to access
 within our components).
 
 ```javascript
-// ./src/App.js
+// ./src/features/counter/Counter.js
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-function App() {
+function Counter() {
   // read from the Redux store
   const items = useSelector((state) => state.items);
 
@@ -153,14 +157,14 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       <button onClick={handleOnClick}>Click</button>
       <p>{items.length}</p>
     </div>
   );
 }
 
-export default App;
+export default Counter;
 ```
 
 Ok, so this code places a button on the page with an `onClick` event listener
@@ -168,11 +172,30 @@ pointed to `handleOnClick`. When `handleOnClick` is invoked, it calls the
 `dispatch` function, provided by `useDispatch`, to send an action to our Redux
 store.
 
-Meanwhile, we've also got `items.length`, which is _also_ a prop created from
-our **Redux** store. We can access any keys from our Redux store using the
-`useSelector` hook. Whenever those keys are updated in the store, the
-`useSelector` hook will cause our component to re-render. So as the store's
-`items` property increases, `App` will display a different number!
+Remember from our earlier lessons that our Redux `store` has a special
+`dispatch` method that we must call any time we want to create a new state? The
+[`useDispatch` hook][use-dispatch] gives us access to that `dispatch` method so
+we can use it from any of our components!
+
+Similarly, in our previous Redux code, any time we wanted to access our store's
+internal state, we used the store's `getState` method. In the example above, the
+way we can interact with the `getState` method via the
+[`useSelector` hook][use-selector]. This hook takes a _callback function_ that will get called with the `state` object from our Redux store. Whatever the callback function returns will be returned by the hook.
+
+So in this example:
+
+```js
+const items = useSelector((state) => state.items);
+```
+
+We're calling `useSelector` with a callback function, and returning the `items`
+key from our Redux store state.
+
+Another effect of using the `useSelector` hook is that it effectively
+'subscribes' our components to changes in the Redux store state. Whenever the
+value returned by our `useSelector` hook changes, the `useSelector` hook will
+cause our component to re-render. So as the store's `items` property increases,
+`Counter` will display a different number!
 
 If you boot up the app, you should see a button on the page, followed by a zero,
 using the core above for `index.js` and `App.js`, we can see **Redux** in
@@ -293,7 +316,9 @@ configuration.
 ### Resources
 
 - [Redux: Creating a Store](https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store)
-- [React-Redux: useSelector](https://redux.js.org/tutorials/fundamentals/part-5-ui-react#reading-state-from-the-store-with-useselector)
-- [React-Redux: useDispatch](https://redux.js.org/tutorials/fundamentals/part-5-ui-react#dispatching-actions-with-usedispatch)
+- [React-Redux: useDispatch][use-dispatch]
+- [React-Redux: useSelector][use-selector]
 
+[use-dispatch]: https://redux.js.org/tutorials/fundamentals/part-5-ui-react#dispatching-actions-with-usedispatch
+[use-selector]: https://redux.js.org/tutorials/fundamentals/part-5-ui-react#reading-state-from-the-store-with-useselector
 [devtools]: https://github.com/reduxjs/redux-devtools

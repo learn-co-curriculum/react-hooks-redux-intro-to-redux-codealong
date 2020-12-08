@@ -2,7 +2,7 @@ const initialState = {
   items: [],
 };
 
-export function shoppingListReducer(state = initialState, action) {
+function counterReducer(state = initialState, action) {
   switch (action.type) {
     case "count/increment":
       return {
@@ -13,3 +13,5 @@ export function shoppingListReducer(state = initialState, action) {
       return state;
   }
 }
+
+export default counterReducer;
