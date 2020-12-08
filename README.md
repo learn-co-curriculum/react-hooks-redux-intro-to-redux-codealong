@@ -52,7 +52,7 @@ import { shoppingListReducer } from "./features/ShoppingList/shoppingListSlice.j
 import App from "./App";
 import "./index.css";
 
-const store = createStore(shoppingListItemReducer); /* code change */
+const store = createStore(shoppingListReducer); /* code change */
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
@@ -77,7 +77,7 @@ import { shoppingListReducer } from "./features/ShoppingList/shoppingListSlice.j
 import App from "./App";
 import "./index.css";
 
-const store = createStore(shoppingListItemReducer);
+const store = createStore(shoppingListReducer);
 
 // code change - added Provider to wrap around App
 ReactDOM.render(
@@ -263,8 +263,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-// ./src/index.js
 ```
 
 Ok, notice that we are still passing through our reducer to the `createStore`
@@ -292,4 +290,10 @@ previously. We were able to see these changes by hooking our application up to a
 Chrome extension called Redux Devtools, and then providing the correct
 configuration.
 
-[devtools]: https://github.com/zalmoxisus/redux-devtools-extension
+### Resources
+
+- [Redux: Creating a Store](https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store)
+- [React-Redux: useSelector](https://redux.js.org/tutorials/fundamentals/part-5-ui-react#reading-state-from-the-store-with-useselector)
+- [React-Redux: useDispatch](https://redux.js.org/tutorials/fundamentals/part-5-ui-react#dispatching-actions-with-usedispatch)
+
+[devtools]: https://github.com/reduxjs/redux-devtools
