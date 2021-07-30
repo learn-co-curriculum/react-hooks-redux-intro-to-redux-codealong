@@ -13,7 +13,7 @@ that we wrote, and passing a reducer to it. We have been using the **dispatch**
 method from the store, to dispatch actions and update the state.
 
 Now let's think about which part of our application would belong in the official
-Redux library &mdash; that is, which part of our codebase would be common to all
+Redux library — that is, which part of our codebase would be common to all
 applications. Well, probably not the reducer as our reducers seem unique to each
 React & Redux application. The reducers are unique because sometimes we have
 reducers that would add or remove items, or add or remove users, or edit users,
