@@ -45,7 +45,7 @@ instance of the Redux store for us. So we can use that function to create a stor
 We want to import `createStore()` in our `src/index.js` file, where ReactDOM
 renders our application.
 
-```javascript
+```jsx
 // ./src/index.js
 import React from "react";
 import ReactDOM from "react-dom";
@@ -69,7 +69,7 @@ which is imported from `react-redux`. The `Provider` component wraps the top
 level component, App, in this case, and is the only component where `store` is
 passed in:
 
-```javascript
+```jsx
 // ./src/index.js
 import React from "react";
 import ReactDOM from "react-dom";
@@ -97,7 +97,7 @@ in `src/index.js`. We pass our **createStore()** method a reducer, and then we
 pass our newly created store to our **App** component as a prop. You can find
 the reducer in `./src/features/counter/counterSlice.js`:
 
-```javascript
+```js
 // ./src/features/counter/counterSlice.js
 
 const initialState = {
@@ -138,7 +138,7 @@ provided by `react-redux`: the `useDispatch` hook (for dispatching actions to
 the store), and the `useSelector` hook (for _selecting_ parts of state to access
 within our components).
 
-```javascript
+```jsx
 // ./src/features/counter/Counter.js
 
 import React from "react";
@@ -210,7 +210,7 @@ to go into greater depth in the next sections. In the meantime, let's get some
 feedback. First, let's log our action and the new state. So we'll change the
 reducer to the following:
 
-```javascript
+```js
 // ./src/features/ShoppingList/shoppingListSlice.js
 
 const initialState = {
@@ -267,7 +267,7 @@ Second, we need to tell our application to communicate with this extension.
 Doing so is pretty easy. Now we change the arguments to our `createStore` function
 to the following:
 
-```javascript
+```jsx
 // ./src/index.js
 import React from "react";
 import ReactDOM from "react-dom";
