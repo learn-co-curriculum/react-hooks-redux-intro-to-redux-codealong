@@ -54,9 +54,9 @@ import counterReducer from "./features/counter/counterSlice.js";
 import App from "./App";
 import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
-
 const store = createStore(counterReducer); /* code change */
+
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
 Notice that we are importing the `createStore` function from Redux. Now, with
