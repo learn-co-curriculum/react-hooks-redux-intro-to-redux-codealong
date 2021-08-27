@@ -79,6 +79,8 @@ import counterReducer from "./features/counter/counterSlice.js";
 import App from "./App";
 import "./index.css";
 
+const store = createStore(counterReducer);
+
 // code change - added Provider to wrap around App
 ReactDOM.render(
   <Provider store={store}>
