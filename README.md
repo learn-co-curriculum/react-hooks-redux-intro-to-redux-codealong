@@ -1,10 +1,10 @@
 # Intro to Redux: Reading Data from State
 
-## Objectives
+## Learning Goals
 
-- Use the `createStore()` function provided by the Redux library.
+- Use the `createStore()` function provided by the Redux library
 - Use the `useSelector()` and `useDispatch()` hooks provided by React-Redux to
-  access and update the store.
+  access and update the store
 
 ## Introduction
 
