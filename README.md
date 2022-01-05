@@ -207,7 +207,7 @@ re-render and display the updated counter.
 
 #### Add Logging to Our Reducer
 
-Ok, so getting our application to re-render takes a bit of work, and were going
+Ok, so getting our application to re-render takes a bit of work, and we're going
 to go into greater depth in the next sections. In the meantime, let's get some
 feedback. First, let's log our action and the new state. So we'll change the
 reducer to the following:
