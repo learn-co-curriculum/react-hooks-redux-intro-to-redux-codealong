@@ -213,7 +213,7 @@ feedback. First, let's log our action and the new state. So we'll change the
 reducer to the following:
 
 ```js
-// ./src/features/ShoppingList/shoppingListSlice.js
+// ./src/features/counter/counterSlice.js
 
 const initialState = {
   items: [],
