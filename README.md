@@ -32,9 +32,6 @@ install two packages, `redux` and `react-redux` by running
 `package.json` file, so all you need to do is run `npm install && npm start` to
 get started.
 
-In this code along, we'll be building a simple shopping list application that
-will allow a user to view an existing shopping list.
-
 ### Step 1: Setting Up The Store
 
 First things first, we'll use Redux to initialize our store and pass it down to
