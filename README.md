@@ -176,7 +176,7 @@ we can use it from any of our components!
 
 Similarly, in our previous Redux code, any time we wanted to access our store's
 internal state, we used the store's `getState` method. In the example above, the
-way we can interact with the `getState` method via the [`useSelector`
+way we can interact with the `getState` method is via the [`useSelector`
 hook][use-selector]. This hook takes a _callback function_ that will get called
 with the `state` object from our Redux store. Whatever the callback function
 returns will be returned by the hook.
@@ -196,11 +196,10 @@ value returned by our `useSelector` hook changes, the `useSelector` hook will
 cause our component to re-render. So as the store's `items` property increases,
 `Counter` will display a different number!
 
-If you boot up the app, you should see a button on the page, followed by a zero,
-using the core above for `index.js` and `App.js`, we can see Redux in action.
+If you boot up the app, you should see a button on the page, followed by a zero.
 Every button click dispatches an action to our store, causing it to change.
-Since data (`items`) from that store is being accessed in App, App will
-re-render and display the updated counter.
+Since data (`items`) from that store is being accessed in `Counter`, `Counter`
+will re-render and display the updated counter.
 
 #### Add Logging to Our Reducer
 
